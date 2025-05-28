@@ -17,7 +17,7 @@ import os
 }
 
 for key, station in 지역들.items():
-    filepath = "./WeatherDetail/4월미포함/" + key + ".csv"
+    filepath = "./WeatherDetail/" + key + ".csv"
     filepath2 = "./개화일/" + key + ".csv"
 
     df = pd.read_csv(filepath)

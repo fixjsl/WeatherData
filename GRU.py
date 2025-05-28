@@ -62,8 +62,8 @@ for key in 지역들.keys():
     y_train, y_test = y_scaled[:24], y_scaled[24:]
     #모델 생성
     model = Sequential()
-    #LSTM모델 에서 활성화 함수는 ReLu로 input형상은 1,6배열
-    model.add(LSTM(50, activation='relu', input_shape=(1, 6)))
+    #GRU모델 에서 활성화 함수는 ReLu로
+    model.add(GRU(50, activation='relu', input_shape=(1, 6)))
     #출력층은 하나
     model.add(Dense(1))
     #경사하강법은 adam사용 손실함수는 mse

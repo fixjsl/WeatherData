@@ -30,7 +30,7 @@ for number in range(1,26):
     #현재 연도의 파일 가져오기
     year = 2000 + number
     filename = f"{year}.csv"
-    filepath = "./" + filename
+    filepath = "./원본 자료/" + filename
     df = pd.read_csv(filepath, encoding="euc-kr")
     df = df.fillna({
     "일 최심적설(cm)": 0,

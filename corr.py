@@ -9,7 +9,7 @@ import os
 
 for 지역 in 지역들:
 
-    filepath = "./WeatherDetail/4월미포함/"+지역+".csv"
+    filepath = "./WeatherDetail/"+지역+".csv"
 
     filepath2 = "./개화일/"+지역+".csv"
 
