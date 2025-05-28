@@ -20,11 +20,14 @@ for 지역 in 지역들:
     df = pd.read_csv(filepath)
     df2 = pd.read_csv(filepath2)
 
-    df2["벚나무"] = pd.to_datetime(df2["벚나무"])
 
+    #날짜데이터를 datetime형식으로 변환
+    df2["벚나무"] = pd.to_datetime(df2["벚나무"])
+    df["일시"] = pd.to_datetime(df["일시"])
+    #벚꽃이 피어난 날
     max = df2["벚나무"].dt.dayofyear.max()
 
-    df["일시"] = pd.to_datetime(df["일시"])
-
+    
+    #벚꽃이 피어난 날 까지만 등록 후 csv로 내보내기
     df =  df[df["일시"].dt.dayofyear <= max] 
     df.to_csv("./WeatherDetail/4월미포함/"+지역+".csv", index= False , encoding= 'utf-8')

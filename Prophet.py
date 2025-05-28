@@ -81,26 +81,9 @@ for key, station in 지역들.items():
     개화일np = 개화일.loc[:23].to_numpy()
     T개화일np = 개화일.loc[24]
 
-
+    #학습데이터 테스트데이터 분리
     Training_data = Train_data[:24]
     Test_data = Train_data[24]
-
-
-
-    #print(f"지역 데이터(학습) {key} \n",Training_data)
-    #print(f"지역 : {key} 정답 개화일 \n{개화일np}")
-
-    #print(f"지역 데이터(정답) {key}\n",Test_data)
-    #print(f"지역 : {key} 정답 개화일 \n{T개화일np}")
-
-    #station.fit(Training_data, 개화일np)
-
-    
-    #print(f"지역 : {key}, 점수 : ",station.score(Training_data,개화일np))
-
-    #예측값 = station.predict([Test_data])
-    #print("예측 개화일:", 예측값)
-    #print("실제 개화일:", T개화일np)
 
     # pandas로 변환
     train_df = pd.DataFrame(Training_data, columns=[

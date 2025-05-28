@@ -16,6 +16,7 @@ for 지역 in 지역들:
     df = pd.read_csv(filepath)
     df2 = pd.read_csv(filepath2)
 
+    #날짜데이터를 datetime형식으로 변환
     df["일시"] = pd.to_datetime(df["일시"])
     df["년도"] = df["일시"].dt.year
     df["월"] = df["일시"].dt.month
