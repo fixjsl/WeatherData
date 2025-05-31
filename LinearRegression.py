@@ -2,9 +2,6 @@ import pandas as pd
 import numpy as np
 import seaborn as se
 from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import TheilSenRegressor
-from prophet import Prophet
-from sklearn.metrics import r2_score, mean_squared_error
 import matplotlib.pyplot as plt
 import os
 

@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 import os
 
+#RandomForestModel 지역별로 
 서울 = RandomForestRegressor(random_state=42)
 대구 = RandomForestRegressor(random_state=42)
 광주 = RandomForestRegressor(random_state=42)
@@ -17,6 +18,7 @@ import os
 }
 
 for key, station in 지역들.items():
+    #지역별 자료 불러오기
     filepath = "./WeatherDetail/" + key + ".csv"
     filepath2 = "./개화일/" + key + ".csv"
 
@@ -60,9 +62,9 @@ for key, station in 지역들.items():
 
     Training_data = Train_data[:24]  # 마지막 1년 제외
     Test_data = Train_data[24] # 테스트용 데이터
-
+    #학습
     station.fit(Training_data, 개화일np)
-
+    
     forecast = station.predict([Test_data])[0]
 
     print(f"지역 : {key}, 정확도(R²): ", station.score(Training_data, 개화일np))

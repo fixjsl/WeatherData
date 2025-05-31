@@ -32,6 +32,7 @@ for key in 지역들.keys():
 
     #모든년도에 4월 인덱스를 추가
     full_index = pd.MultiIndex.from_product([모든년도, [2, 3, 4]], names=["년도", "월"])
+    #연도별 월로 묶음
     기온 = df.groupby(["년도", "월"])["평균기온(°C)"].sum().reindex(full_index).fillna(0)
     일조량 = df.groupby(["년도", "월"])["합계 일조시간(hr)"].sum().reindex(full_index).fillna(0)
     #월별 누적기온을 변환
@@ -55,9 +56,10 @@ for key in 지역들.keys():
 
     X_scaled = scaler_X.fit_transform(X)
     y_scaled = scaler_y.fit_transform(y.reshape(-1, 1))
-
+    
     X_scaled = X_scaled.reshape((X_scaled.shape[0], 1, X_scaled.shape[1]))
 
+    #학습데이터 나누기
     X_train, X_test = X_scaled[:24], X_scaled[24:]
     y_train, y_test = y_scaled[:24], y_scaled[24:]
     #모델 생성
