@@ -74,14 +74,6 @@ for key, station in 지역들.items():
     Training_data = Train_data[:24]
     Test_data = Train_data[24]
 
-
-
-    print(f"지역 데이터(학습) {key} \n",Training_data)
-    print(f"지역 : {key} 정답 개화일 \n{개화일np}")
-
-    print(f"지역 데이터(정답) {key}\n",Test_data)
-    print(f"지역 : {key} 정답 개화일 \n{T개화일np}")
-
     station.fit(Training_data, 개화일np)
 
     
