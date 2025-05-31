@@ -91,10 +91,9 @@ for key, station in 지역들.items():
     "2월일조", "3월일조", "4월일조"
     ]   )
     train_df["y"] = 개화일np
-
 # 연도 정보: 그냥 1월 1일로 세팅
     years = df["년도"].unique()[:24]  # 24년치
-    train_df["ds"] = pd.to_datetime(years.astype(str) + "-01-01")
+    train_df["ds"] = pd.to_datetime(np.char.add(years.astype(str), "-01-01"))
 
 # Prophet 모델 생성 및 외부 변수 등록
     

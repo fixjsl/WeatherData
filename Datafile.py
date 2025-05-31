@@ -37,7 +37,7 @@ for number in range(1,26):
     "평균 전운량(1/10)": 0
     })
     for Key, stations in station_section.items():
-        outpath = os.path.join("./WeatherDetail" ,f"{Key}.csv")
+        outpath = os.path.join("./원본 자료" ,f"{Key}.csv")
         
         for station in stations:
             tempdf = df[df["지점명"] == station]

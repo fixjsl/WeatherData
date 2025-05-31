@@ -57,19 +57,37 @@ for key, station in 지역들.items():
 
     #날짜데이터를 datetime형식으로 변환
     개화일 = df2["벚나무"].dt.dayofyear
-    개화일np = 개화일.loc[:23].to_numpy()  # 학습용 정답
-    T개화일np = 개화일.loc[24] #테스트용 정답
+    개화일np = 개화일.loc[:21].to_numpy()  # 학습용 정답
+    T개화일np = 개화일.loc[21:] #테스트용 정답
 
+<<<<<<< HEAD
     Training_data = Train_data[:24]  # 마지막 1년 제외
     Test_data = Train_data[24] # 테스트용 데이터
     #학습
     station.fit(Training_data, 개화일np)
     
     forecast = station.predict([Test_data])[0]
+=======
+    Training_data = Train_data[:22]  # 마지막 1년 제외
+    Test_data = Train_data[21:] # 테스트용 데이터
+
+    station.fit(Training_data, 개화일np)
+
+    forecast  = station.predict([Test_data[0]])[0]
+    forecast2 = station.predict([Test_data[1]])[0]
+
+    forecast3 = station.predict([Test_data[2]])[0]
+    forecast4 = station.predict([Test_data[3]])[0]
+
+>>>>>>> d4a8c15685202581e11bff5e121c92a69924c6de
 
     print(f"지역 : {key}, 정확도(R²): ", station.score(Training_data, 개화일np))
     print(f"지역 : {key}, 예측값(R²): ", forecast)
-    print(f"지역 : {key}, 실제값(R²): ", T개화일np)
+    print(f"지역 : {key}, 예측값(R²): ", forecast2)
+
+    print(f"지역 : {key}, 예측값(R²): ", forecast3)
+    print(f"지역 : {key}, 예측값(R²): ", forecast4)
+    print(f"지역 : {key}, 실제값(R²):\n", T개화일np)
     
 
 
