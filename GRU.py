@@ -1,3 +1,4 @@
+#GRU 모델을 이용하는 코드
 import pandas as pd
 import numpy as np
 import os
@@ -5,6 +6,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.layers import GRU
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import r2_score, mean_squared_error
 
 지역들 = {
     "광주광역시": None, "대구광역시": None, "대전광역시": None,
@@ -56,7 +58,7 @@ for key in 지역들.keys():
 
     X_scaled = scaler_X.fit_transform(X)
     y_scaled = scaler_y.fit_transform(y.reshape(-1, 1))
-    
+
     X_scaled = X_scaled.reshape((X_scaled.shape[0], 1, X_scaled.shape[1]))
 
     #학습데이터 나누기

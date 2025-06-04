@@ -2,7 +2,6 @@
 
 import pandas as pd
 import numpy as np
-import seaborn as se
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import os
@@ -24,17 +23,19 @@ for 지역 in 지역들:
     df["년도"] = df["벚나무"].dt.year
 
     
-    #연최초개화일 = df.groupby("년도")["벚나무"].min()
+
+    
+    연최초개화일 = df.groupby("년도")["벚나무"].min()
     연최후개화일 = df.groupby("년도")["벚나무"].max()
 
     #print(f"지역: {지역} ,연최초개화일", 연최초개화일)
     
-    print(f"지역 : {지역} ,연최후개화일", 연최후개화일)
+    print(f"지역 : {지역} ,연최후개화일", 연최초개화일)
     print 
-    plt.plot(연최후개화일.index, 연최후개화일.dt.dayofyear, label=지역)
-plt.title("연도별 최후 개화일 (벚나무)")
+    plt.plot(연최초개화일[:24].index, 연최초개화일.dt.dayofyear[:24], label=지역)
+plt.title("연도별 개화일 (벚나무)")
 plt.xlabel("년도")
-plt.ylabel("최후 개화일 (연중 일수 기준)")
+plt.ylabel("개화일 (연중 일수 기준)")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()

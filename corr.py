@@ -1,6 +1,6 @@
+#상관관계 계산 
 import pandas as pd
 import numpy as np
-import seaborn as se
 import matplotlib.pyplot as plt
 import os
 
@@ -21,17 +21,17 @@ for 지역 in 지역들:
     df["년도"] = df["일시"].dt.year
     df["월"] = df["일시"].dt.month
 
-    # 연도별 평균 기온
+    # 연도별 누적 기온
     연누적기온 = df.groupby(["년도","월"])["평균기온(°C)"].sum()
     연평균2 = df.groupby(["년도","월"])["최저기온(°C)"].mean()
     연평균3 = df.groupby(["년도","월"])["최고기온(°C)"].mean()
     연누적일조량 = df.groupby(["년도","월"])["합계 일조시간(hr)"].sum()
     연누적강수량 = df.groupby(["년도","월"])["일강수량(mm)"].sum()
 
-    print(f"연누적기온  : {연누적기온}")
+    #print(f"연누적기온  : {연누적기온}")
     # print(f"연최저기온평균  : {연평균2}")
     # print(f"연최고기운평균  : {연평균3}")
-    print(f"연누적일조량  : {연누적일조량}")
+    #print(f"연누적일조량  : {연누적일조량}")
     # print(f"연누적강수량  : {연누적강수량}")
 
     # 개화일 → 연도 + 연중 몇 번째 날인지

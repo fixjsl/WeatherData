@@ -1,25 +1,21 @@
-#RandomForest모델
 import pandas as pd
 import numpy as np
+import joblib as jo
+from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
-import joblib
+from prophet import Prophet
+import matplotlib.pyplot as plt
 import os
 
-#RandomForestModel 지역별로 
-서울 = RandomForestRegressor(random_state=42)
-대구 = RandomForestRegressor(random_state=42)
-광주 = RandomForestRegressor(random_state=42)
-대전 = RandomForestRegressor(random_state=42)
-부산 = RandomForestRegressor(random_state=42)
-인천 = RandomForestRegressor(random_state=42)
-울산 = RandomForestRegressor(random_state=42)
 
-지역들 = {
-    "광주광역시": 광주, "대구광역시": 대구, "대전광역시": 대전,
-    "서울특별시": 서울, "부산광역시": 부산, "울산광역시": 울산, "인천광역시": 인천
-}
+
+
+
+
+지역들 = ["광주광역시", "대구광역시", "대전광역시",
+    "서울특별시", "부산광역시", "울산광역시", "인천광역시"]
 modeloutpath = "./Model/"
-for key, station in 지역들.items():
+for key in 지역들:
     #지역별 자료 불러오기
     filepath = "./WeatherDetail/" + key + ".csv"
     filepath2 = "./개화일/" + key + ".csv"
@@ -27,8 +23,14 @@ for key, station in 지역들.items():
     df = pd.read_csv(filepath)
     df2 = pd.read_csv(filepath2)
 
+
     os.makedirs("./Model/"+key, exist_ok=True)
-    modeloupath = os.path.join(modeloutpath,key,"RandomForest.pkl")
+    Randommodelpath = os.path.join(modeloutpath,key,"RandomForest.pkl")
+    LinerModelpath =os.path.join(modeloutpath,key,"Linear.pkl")
+    ProphetModelpath = os.path.join(modeloutpath,key,"Prophet.pkl")
+    Random  : RandomForestRegressor= jo.load(Randommodelpath)
+    Linear : LinearRegression = jo.load(LinerModelpath)
+    Prop : Prophet = jo.load(ProphetModelpath)
     #날짜데이터를 datetime형식으로 변환
     df["일시"] = pd.to_datetime(df["일시"])
     df["년도"] = df["일시"].dt.year
@@ -56,32 +58,24 @@ for key, station in 지역들.items():
         누적2월기온, 누적3월기온, 누적4월기온,
         누적2월일조량, 누적3월일조량, 누적4월일조량
     ])
-
+    columns =  ["2월기온", "3월기온", "4월기온", "2월일조", "3월일조", "4월일조"]
     #날짜데이터를 datetime형식으로 변환
     df2["벚나무"] = pd.to_datetime(df2["벚나무"])
     개화일 = df2["벚나무"].dt.dayofyear
-    개화일np = 개화일.loc[:19].to_numpy()  # 학습용 정답
-    T개화일np = 개화일.loc[20:23] #테스트용 정답
-    Training_data = Train_data[:20]  # 마지막 1년 제외
-    Test_data = Train_data[20:24] # 테스트용 데이터
-    
+    T개화일np = 개화일.loc[24:] #테스트용 정답
 
-    
-    station.fit(Training_data, 개화일np)
+    Test_data = Train_data[24:] # 테스트용 데이터
 
-    
-    forecast  = station.predict([Test_data[0]])[0]
-    forecast2 = station.predict([Test_data[1]])[0]
-    forecast3 = station.predict([Test_data[2]])[0]
-    forecast4 = station.predict([Test_data[3]])[0]
+    years_test = df["년도"].unique()[24:]
+    test_df = pd.DataFrame(Test_data, columns=columns).assign(
+    ds=pd.to_datetime(years_test.astype(str) + "-01-01")
+)
 
-    print(f"지역 : {key}, 정확도(R²): ", station.score(Test_data, T개화일np))
-    print(f"지역 : {key}, 예측값(R²): ", forecast)
-    print(f"지역 : {key}, 예측값(R²): ", forecast2)
-    print(f"지역 : {key}, 예측값(R²): ", forecast3)
-    print(f"지역 : {key}, 예측값(R²): ", forecast4)
+    forecastLinear = Linear.predict(Test_data)
+    forecastRandom = Random.predict(Test_data)
+    forecastProp = Prop.predict(test_df)
+    print(f"지역 : {key}, Linear예측값(R²): ", forecastLinear)
+    print(f"지역 : {key}, Random예측값(R²): ", forecastRandom)
+    print(f"지역 : {key}, Prophet예측값(R²): ", forecastProp["yhat"].values[0])
     print(f"지역 : {key}, 실제값(R²):\n", T개화일np)
     
-    joblib.dump(station,modeloupath)
-
-

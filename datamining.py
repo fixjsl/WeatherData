@@ -1,6 +1,7 @@
+#온도데이터를 그 해의 개화일까지만 처리해서 내보내는 코드
+
 import pandas as pd
 import numpy as np
-import seaborn as se
 import matplotlib.pyplot as plt
 import os
 

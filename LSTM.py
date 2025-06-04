@@ -1,3 +1,4 @@
+#LSTM 모델로 학습
 import pandas as pd
 import numpy as np
 import os
@@ -5,6 +6,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.layers import GRU
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import r2_score, mean_squared_error
 
 지역들 = {
     "광주광역시": None, "대구광역시": None, "대전광역시": None,
