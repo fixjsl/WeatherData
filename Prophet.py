@@ -5,6 +5,7 @@ from Prophet import Prophet
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import TheilSenRegressor
 from sklearn.metrics import r2_score, mean_squared_error
+import joblib as jo
 import matplotlib.pyplot as plt
 import os
 
@@ -19,7 +20,7 @@ import os
 
 지역들 = {"광주광역시":광주,"대구광역시":대구,"대전광역시":대전,"서울특별시":서울,"부산광역시":부산,"울산광역시":울산,"인천광역시":인천}
 
-
+modeloutpath = "./Model/"
 for key, station in 지역들.items():
 
     filepath = "./WeatherDetail/"+key+".csv"
@@ -32,7 +33,8 @@ for key, station in 지역들.items():
     df["일시"] = pd.to_datetime(df["일시"])
     df["년도"] = df["일시"].dt.year
     df["월"] = df["일시"].dt.month
-
+    os.makedirs("./Model/"+key, exist_ok=True)
+    modeloupath = os.path.join(modeloutpath,key,"Linear.pkl")
     df2["벚나무"] = pd.to_datetime(df2["벚나무"])
 
 
@@ -90,7 +92,6 @@ for key, station in 지역들.items():
     
     for col in ["2월기온", "3월기온", "4월기온", "2월일조", "3월일조", "4월일조"]:
         station.add_regressor(col)
-
 # 학습
     station.fit(train_df[["ds", "y"] + [col for col in train_df.columns if col.startswith(("2월", "3월", "4월"))]])
 
@@ -109,12 +110,10 @@ for key, station in 지역들.items():
     점수 = r2_score(실제값,예측값)
 
     print(f"지역 : {key} ,점수 : " , 점수)
-
-
 # 예측
     forecast = station.predict(test_df)
 
-
-    
     print(f"지역 : {key} ,예측 개화일 (yhat):", forecast["yhat"].values[0])
     print(f"지역 : {key} ,실제 개화일:", T개화일np)
+    
+    jo.dump(modeloutpath)

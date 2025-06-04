@@ -58,28 +58,21 @@ for key, station in 지역들.items():
     #학습데이터 배열 변형
     Train_data = np.column_stack([누적2월기온,누적3월기온,누적4월기온,누적2월일조량,누적3월일조량,누적4월일조량])
 
-
     개화일 = df2["벚나무"].dt.dayofyear
     
-
     연누적기온np = 연누적기온_pd[:연누적기온_pd.index.size-3].to_numpy()
     연누적일조량np = 연누적일조량_pd[:연누적기온_pd.index.size-3].to_numpy()
-
 
     T연누적기온np = 연누적기온_pd.tail(3).to_numpy()
     T연누적일조량np = 연누적일조량_pd.tail(3).to_numpy()
 
-    
     개화일np = 개화일.loc[:19].to_numpy()  # 학습용 정답
     T개화일np = 개화일.loc[20:23] #테스트용 정답
     Training_data = Train_data[:20]  # 마지막 1년 제외
     Test_data = Train_data[20:24] # 테스트용 데이터
-    
-
-    
+        
     station.fit(Training_data, 개화일np)
 
-    
     forecast  = station.predict([Test_data[0]])[0]
     forecast2 = station.predict([Test_data[1]])[0]
     forecast3 = station.predict([Test_data[2]])[0]

@@ -29,7 +29,7 @@ for 지역 in 지역들:
     df2["벚나무"] = pd.to_datetime(df2["벚나무"])
     df2["년도"] = df2["벚나무"].dt.year
 
-    mean = df.groupby("년도")["평균기온(°C)"].sum()
+    mean = df.groupby("년도")["합계 일조시간(hr)"].sum()
 
     #연최초개화일 = df.groupby("년도")["벚나무"].min()
     연최후개화일 = df2.groupby("년도")["벚나무"].max()
@@ -44,9 +44,9 @@ for 지역 in 지역들:
     print(mean)
     #print(f"지역: {지역} ,연최초개화일", 연최초개화일)
     plt.scatter( mean[:24],연최후개화일[:24].dt.dayofyear, label=지역)
-    plt.plot(mean,y2)
-plt.title("온도,개화일")
-plt.xlabel("온도")
+    #plt.plot(mean,y2)
+plt.title("일조량,개화일")
+plt.xlabel("일조량")
 plt.ylabel("개화일")
 plt.legend()
 plt.grid(True)
