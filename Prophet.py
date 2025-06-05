@@ -1,7 +1,7 @@
 #Prophet모델
 import pandas as pd
 import numpy as np
-from Prophet import Prophet
+from prophet import Prophet
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import TheilSenRegressor
 from sklearn.metrics import r2_score, mean_squared_error
@@ -29,15 +29,14 @@ for key, station in 지역들.items():
 
     df = pd.read_csv(filepath)
     df2 = pd.read_csv(filepath2)
+    os.makedirs("./Model/"+key, exist_ok=True)
+    modeloupath = os.path.join(modeloutpath,key,"Prophet.pkl")
+    df2["벚나무"] = pd.to_datetime(df2["벚나무"])
 
+    #날짜데이터를 datetime형식으로 변환
     df["일시"] = pd.to_datetime(df["일시"])
     df["년도"] = df["일시"].dt.year
     df["월"] = df["일시"].dt.month
-    os.makedirs("./Model/"+key, exist_ok=True)
-    modeloupath = os.path.join(modeloutpath,key,"Linear.pkl")
-    df2["벚나무"] = pd.to_datetime(df2["벚나무"])
-
-
     모든년도 = df["년도"].unique()
 
     # MultiIndex 생성 (2,3,4월 모두)
@@ -116,4 +115,4 @@ for key, station in 지역들.items():
     print(f"지역 : {key} ,예측 개화일 (yhat):", forecast["yhat"].values[0])
     print(f"지역 : {key} ,실제 개화일:", T개화일np)
     
-    jo.dump(modeloutpath)
+    jo.dump(station, modeloupath)

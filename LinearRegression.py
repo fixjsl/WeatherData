@@ -58,6 +58,7 @@ for key, station in 지역들.items():
     #학습데이터 배열 변형
     Train_data = np.column_stack([누적2월기온,누적3월기온,누적4월기온,누적2월일조량,누적3월일조량,누적4월일조량])
 
+
     개화일 = df2["벚나무"].dt.dayofyear
     
     연누적기온np = 연누적기온_pd[:연누적기온_pd.index.size-3].to_numpy()
@@ -78,7 +79,7 @@ for key, station in 지역들.items():
     forecast3 = station.predict([Test_data[2]])[0]
     forecast4 = station.predict([Test_data[3]])[0]
 
-    print(f"지역 : {key}, 정확도(R²): ", station.score(Test_data, T개화일np))
+    print(f"지역 : {key}, 정확도(R²): ", station.score(Training_data, 개화일np))
     print(f"지역 : {key}, 예측값(R²): ", forecast)
     print(f"지역 : {key}, 예측값(R²): ", forecast2)
     print(f"지역 : {key}, 예측값(R²): ", forecast3)

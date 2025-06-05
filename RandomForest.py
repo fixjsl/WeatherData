@@ -75,7 +75,7 @@ for key, station in 지역들.items():
     forecast3 = station.predict([Test_data[2]])[0]
     forecast4 = station.predict([Test_data[3]])[0]
 
-    print(f"지역 : {key}, 정확도(R²): ", station.score(Test_data, T개화일np))
+    print(f"지역 : {key}, 정확도(R²): ", station.score(Training_data, 개화일np))
     print(f"지역 : {key}, 예측값(R²): ", forecast)
     print(f"지역 : {key}, 예측값(R²): ", forecast2)
     print(f"지역 : {key}, 예측값(R²): ", forecast3)
